@@ -1,0 +1,11 @@
+
+# Dependências
+node_modules/
+
+# Credenciais
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
