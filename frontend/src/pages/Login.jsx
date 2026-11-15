@@ -5,11 +5,41 @@ import './Login.css'
 function Login({ irParaCadastro }) {
   const [email, setEmail] = useState('')
   const [senha, setSenha] = useState('')
+  const [mensagem, setMensagem] = useState('')
+  const [carregando, setCarregando] = useState(false)
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault()
+    setMensagem('')
+    setCarregando(true)
 
-    console.log('Formulário enviado')
+    try {
+      const resposta = await fetch('http://localhost:3000/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: email.trim(),
+          senha,
+        }),
+      })
+
+      const dados = await resposta.json()
+
+      if (!resposta.ok) {
+        throw new Error(dados.mensagem || 'Erro ao realizar login.')
+      }
+
+      setMensagem(`Bem-vindo ao TaskFlow, ${dados.usuario.nome}!`)
+
+      console.log('Login realizado com sucesso!')
+
+    } catch (erro) {
+      setMensagem(erro.message || 'Não foi possível conectar ao servidor.')
+    } finally {
+      setCarregando(false)
+    }
   }
 
   return (
@@ -35,10 +65,12 @@ function Login({ irParaCadastro }) {
           required
         />
 
-        <button type="submit">
-          Entrar
+        <button type="submit" disabled={carregando}>
+          {carregando ? 'Entrando...' : 'Entrar'}
         </button>
       </form>
+
+      {mensagem && <p role="status">{mensagem}</p>}
 
       <p>
         Ainda não tem uma conta?{' '}
