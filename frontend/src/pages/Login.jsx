@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import './Login.css'
 
-function Login({ irParaCadastro }) {
+function Login({ irParaCadastro, aoLogar }) {
   const [email, setEmail] = useState('')
   const [senha, setSenha] = useState('')
   const [mensagem, setMensagem] = useState('')
@@ -31,12 +31,18 @@ function Login({ irParaCadastro }) {
         throw new Error(dados.mensagem || 'Erro ao realizar login.')
       }
 
-      setMensagem(`Bem-vindo ao TaskFlow, ${dados.usuario.nome}!`)
+      if (!dados.token || !dados.usuario) {
+        throw new Error('Resposta de autenticação inválida.')
+      }
 
-      console.log('Login realizado com sucesso!')
+      
+      aoLogar({
+        token: dados.token,
+        usuario: dados.usuario,
+      })
 
     } catch (erro) {
-      setMensagem(erro.message || 'Não foi possível conectar ao servidor.')
+      setMensagem(erro.message || 'Não foi possível realizar login.')
     } finally {
       setCarregando(false)
     }
@@ -70,7 +76,7 @@ function Login({ irParaCadastro }) {
         </button>
       </form>
 
-      {mensagem && <p role="status">{mensagem}</p>}
+      {mensagem && <p role="alert">{mensagem}</p>}
 
       <p>
         Ainda não tem uma conta?{' '}
@@ -87,3 +93,4 @@ function Login({ irParaCadastro }) {
 }
 
 export default Login
+

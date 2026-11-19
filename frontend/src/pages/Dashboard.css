@@ -1,0 +1,276 @@
+
+/* ========================================
+   TASKFLOW - DASHBOARD
+======================================== */
+
+/* Estrutura principal */
+.dashboard {
+  min-height: 100vh;
+  padding: 40px 24px;
+  background: #0f172a;
+  color: #f8fafc;
+  font-family: Arial, sans-serif;
+}
+
+.dashboard * {
+  box-sizing: border-box;
+}
+
+/* ========================================
+   CABEÇALHO
+======================================== */
+
+.dashboard header {
+  max-width: 1100px;
+  margin: 0 auto 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.dashboard h1 {
+  color: #38bdf8;
+  font-size: 32px;
+  margin: 0;
+}
+
+.dashboard header p {
+  color: #cbd5e1;
+  margin-top: 8px;
+}
+
+/* ========================================
+   SEÇÕES DO DASHBOARD
+======================================== */
+
+.dashboard section {
+  max-width: 1100px;
+  margin: 0 auto 28px;
+  padding: 28px;
+  background: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 14px;
+}
+
+.dashboard h2 {
+  margin-top: 0;
+  margin-bottom: 22px;
+  color: #f8fafc;
+  font-size: 24px;
+}
+
+/* ========================================
+   FORMULÁRIO DE TAREFAS
+======================================== */
+
+.dashboard form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.dashboard input,
+.dashboard textarea,
+.dashboard select {
+  width: 100%;
+  padding: 13px 15px;
+  border: 1px solid #475569;
+  border-radius: 8px;
+  background: #0f172a;
+  color: #f8fafc;
+  font-size: 15px;
+  font-family: inherit;
+}
+
+.dashboard input::placeholder,
+.dashboard textarea::placeholder {
+  color: #94a3b8;
+}
+
+.dashboard textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.dashboard input:focus,
+.dashboard textarea:focus,
+.dashboard select:focus {
+  outline: 2px solid #38bdf8;
+  outline-offset: 1px;
+}
+
+/* ========================================
+   BOTÕES GERAIS
+======================================== */
+
+.dashboard button {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  background: #0284c7;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.dashboard button:hover:not(:disabled) {
+  background: #0369a1;
+  transform: translateY(-1px);
+}
+
+.dashboard button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ========================================
+   LISTA DE TAREFAS
+======================================== */
+
+.dashboard ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(min(100%, 250px), 1fr)
+  );
+  gap: 16px;
+}
+
+/* Cartões das tarefas */
+.dashboard li {
+  padding: 20px;
+  background: #0f172a;
+  border: 1px solid #334155;
+  border-radius: 10px;
+  transition:
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.dashboard li:hover {
+  border-color: #38bdf8;
+  transform: translateY(-2px);
+}
+
+.dashboard li h3 {
+  margin: 0 0 12px;
+  color: #38bdf8;
+  font-size: 19px;
+  overflow-wrap: anywhere;
+}
+
+.dashboard li p {
+  color: #cbd5e1;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+/* ========================================
+   BOTÕES EDITAR E EXCLUIR
+======================================== */
+
+.dashboard .acoes-tarefa {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.dashboard .acoes-tarefa button {
+  flex: 1;
+}
+
+/* Botão Editar */
+.dashboard .btn-editar {
+  background: #2563eb;
+  color: #ffffff;
+}
+
+.dashboard .btn-editar:hover:not(:disabled) {
+  background: #1d4ed8;
+}
+
+/* Botão Excluir */
+.dashboard .btn-excluir {
+  background: #dc2626;
+  color: #ffffff;
+}
+
+.dashboard .btn-excluir:hover:not(:disabled) {
+  background: #b91c1c;
+}
+
+/* Botão Cancelar edição */
+.dashboard .btn-cancelar {
+  background: #475569;
+  color: #ffffff;
+}
+
+.dashboard .btn-cancelar:hover:not(:disabled) {
+  background: #334155;
+}
+
+/* ========================================
+   MENSAGENS DO SISTEMA
+======================================== */
+
+.dashboard > p[role="status"] {
+  max-width: 1100px;
+  margin: 20px auto;
+  padding: 14px 18px;
+  background: #164e63;
+  color: #f8fafc;
+  border: 1px solid #0891b2;
+  border-radius: 8px;
+  font-size: 15px;
+}
+
+/* ========================================
+   RESPONSIVIDADE
+======================================== */
+
+@media (max-width: 600px) {
+  .dashboard {
+    padding: 20px 12px;
+  }
+
+  .dashboard header {
+    align-items: flex-start;
+  }
+
+  .dashboard h1 {
+    font-size: 28px;
+  }
+
+  .dashboard section {
+    padding: 18px;
+  }
+
+  .dashboard h2 {
+    font-size: 21px;
+  }
+
+  .dashboard li {
+    padding: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard .acoes-tarefa {
+    flex-direction: column;
+  }
+
+  .dashboard .acoes-tarefa button {
+    width: 100%;
+  }
+}
+
