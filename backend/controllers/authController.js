@@ -8,6 +8,7 @@ const cadastrarUsuario = async (req, res) => {
   try {
     const { nome, email, senha } = req.body || {};
 
+    
     if (
       typeof nome !== "string" ||
       typeof email !== "string" ||
@@ -21,14 +22,17 @@ const cadastrarUsuario = async (req, res) => {
       });
     }
 
+    
     const emailNormalizado = email.trim().toLowerCase();
 
+    
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailNormalizado)) {
       return res.status(400).json({
         mensagem: "Informe um e-mail válido.",
       });
     }
 
+    
     if (senha.length < 8) {
       return res.status(400).json({
         mensagem: "A senha deve ter pelo menos 8 caracteres.",
@@ -45,9 +49,11 @@ const cadastrarUsuario = async (req, res) => {
         mensagem: "Este e-mail já está cadastrado.",
       });
     }
-a
+
+    
     const senhaHash = await bcrypt.hash(senha, 10);
 
+    
     const usuario = await User.create({
       nome: nome.trim(),
       email: emailNormalizado,
@@ -63,7 +69,6 @@ a
       },
     });
   } catch (erro) {
-    
     if (erro.code === 11000) {
       return res.status(409).json({
         mensagem: "Este e-mail já está cadastrado.",
@@ -95,7 +100,7 @@ const loginUsuario = async (req, res) => {
       });
     }
 
-    
+
     const usuario = await User.findOne({
       email: email.trim().toLowerCase(),
     }).select("+senha");
@@ -106,6 +111,7 @@ const loginUsuario = async (req, res) => {
       });
     }
 
+    
     const senhaCorreta = await bcrypt.compare(
       senha,
       usuario.senha
@@ -117,10 +123,10 @@ const loginUsuario = async (req, res) => {
       });
     }
 
+    
     if (!process.env.JWT_SECRET) {
       throw new Error("JWT_SECRET não configurada.");
     }
-
     
     const token = jwt.sign(
       {
@@ -132,7 +138,6 @@ const loginUsuario = async (req, res) => {
         algorithm: "HS256",
       }
     );
-
 
     return res.status(200).json({
       mensagem: "Login realizado com sucesso!",
